@@ -9,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  user: any = {};
+  user: any = {
+    username: '',
+    password: ''
+  };
 
   constructor(
     private api: ApiService,
