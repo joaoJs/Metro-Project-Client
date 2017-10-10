@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var google: any;
 
@@ -12,7 +13,7 @@ declare var google: any;
 })
 export class AppComponent {
 
-  markers: any[];
+  markers: any[] = [];
 
   color: string = 'rgb(255,0,0)';
 
@@ -92,10 +93,41 @@ export class AppComponent {
 
   arrToCalc: any[] = [];
 
+  tripObj: any = {};
+
+  stations: any[] = [
+       {lat: 25.7810171, lng: -80.19628360000002},
+       {lat: 25.776034, lng: -80.196061},
+       {lat: 25.7638502, lng: -80.195425},
+       {lat: 25.7497383, lng: -80.211783},
+       {lat: 25.7397915, lng: -80.2388733},
+       {lat: 25.7329031, lng: -80.25484279999999},
+       {lat: 25.7148675, lng: -80.2770295},
+       {lat: 25.7050916, lng: -80.2890178},
+       {lat: 25.6919369, lng: -80.3051089},
+       {lat: 25.6850431, lng: -80.3136722}
+    ];
+
+   newStations: any[] = [
+      {lat: 25.6850431, lng: -80.3136722},
+      {lat: 25.644235, lng: -80.3383722},
+      {lat: 25.6298189, lng: -80.3457406},
+      {lat: 25.6104121, lng: -80.359949},
+      {lat: 25.6071269, lng: -80.39927949999999}
+    ]
+
+    newStationsNorth: any[] = [
+      {lat: 25.7810171, lng: -80.19628360000002},
+      {lat: 25.8011729, lng: -80.20023049999999},
+      {lat: 25.8081475, lng: -80.1936675},
+      {lat: 25.8134218, lng: -80.1934285}
+    ]
+
   constructor(
-    private markerService: ApiService
+    private markerService: ApiService,
+    private activatedThang: ActivatedRoute
   ) {
-    this.markers = this.markerService.getMarkers();
+    // this.markers = this.markerService.getMarkers();
   }
 
   title = 'app';
@@ -150,21 +182,17 @@ export class AppComponent {
 
   addMarker(location: string, lat: number, lng: number) {
     console.log('Adding Marker.');
-    // let bool = false;
-    // if (this.markerDraggable === 'Yes') {
-    //   bool = true;
-    // } else {
-    //   bool = false;
-    // }
+
     this.newMarker = {
       name: location,
       lat: lat,
-      lng: lng
+      lng: lng,
+      //iconUrl: url
       //draggable: bool
     }
-
+    console.log(this)
     this.markers.push(this.newMarker);
-    this.markerService.addMarker(this.newMarker);
+    //this.markerService.addMarker(this.newMarker);
   }
 
   markerDragEnd(marker: any,index: number, $event: any) {
@@ -214,10 +242,12 @@ export class AppComponent {
           this.locOr = response['results'][0].formatted_address;
           this.latOr = response['results'][0].geometry.location.lat;
           this.lngOr = response['results'][0].geometry.location.lng;
+          // adding marker
           this.addMarker(this.locOr,this.latOr,this.lngOr);
           //this.coords = this.allStations.map(s => s.lat + ',' + s.lng).join('|');
           this.stationsArray.forEach(s=> console.log(s.latLng));
           this.coords = this.stationsArray.map(s => s.latLng.lat + ',' + s.latLng.lng).join('|');
+
 
           this.markerService.getDistance(String(this.latOr), String(this.lngOr), this.coords, this.travelModeOr)
             .subscribe(
@@ -314,6 +344,13 @@ export class AppComponent {
                                                                 ${this.distDest} from ${this.closestStDest} station to ${this.locDest}.
                                                                 Total time will be ${timeTotalMess}`;
 
+                                    this.tripObj = {
+                                      origin: this.locOr,
+                                      destination: this.locDest,
+                                      time: this.timeTotal,
+                                      distance: this.completeDist
+                                    };
+
 
                                     this.timeTotal = 0;
 
@@ -343,6 +380,22 @@ export class AppComponent {
       console.log('Err first stArr ---> ', err);
     }
   )
+
+  }
+
+  saveTrip() {
+    console.log(this.tripObj);
+    // we need to send the trip object to save on users trip
+    this.markerService.postTrip(this.tripObj)
+      .subscribe(
+        (data) => {
+          console.log('Saved Trip --> ',data);
+          // reset tripObj to empty obj
+        },
+        (err) => {
+          console.log('ERR --> ', err);
+        }
+      )
 
   }
 

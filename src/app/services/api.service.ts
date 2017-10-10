@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Init } from '../init-markers';
+//import { Init } from '../init-markers';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class ApiService extends Init {
+export class ApiService /*extends Init*/ {
 
   baseUrl: string = 'http://localhost:3000';
 
@@ -16,17 +16,17 @@ export class ApiService extends Init {
   constructor(
     private http: HttpClient
   ) {
-    super();
-    console.log("MarkerService Initialized");
-    this.load();
+    // super();
+    // console.log("MarkerService Initialized");
+    // this.load();
     }
 
   postSignUp(newUser: any) {
-    return this.http.post(this.baseUrl + '/api/process-signup', newUser);
+    return this.http.post(this.baseUrl + '/api/process-signup', newUser, {withCredentials:true});
   }
 
   postLogIn(user: any) {
-    return this.http.post(this.baseUrl + '/api/process-login', user);
+    return this.http.post(this.baseUrl + '/api/process-login', user, {withCredentials: true});
   }
 
   /*getMap(location: string) {
@@ -80,18 +80,51 @@ export class ApiService extends Init {
       return this.http.get(this.geoUrl + 'address=' + location + '&key=' + this.key);
     }
 
+    // instead of calling distance matrix api here, we'll call it in the backend
+    // so now we need to make a get request to the backend instead
     getDistance(lat: string, lng: string, coords: string, mode: string) {
-      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
-      return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
+      // const props = {
+      //   lat: lat,
+      //   lng: lng,
+      //   coords: coords,
+      //   mode: mode,
+      //   key: this.key
+      // }
+      console.log({ lat, lng, coords,mode, key:this.key})
+      return this.http.get(this.baseUrl + '/api/distance/'+ lat+ '/' +lng+ '/'+coords+'/'+mode+'/'+this.key);
+
+      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
     }
 
+    // getDistance(lat: string, lng: string, coords: string, mode: string) {
+    //   //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
+    //   return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
+    // }
+
+
     getDistanceMetro(lat: string, lng: string, coords: string) {
-      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
-      return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=transit&key=' + this.key);
+      // const props = {
+      //   lat: lat,
+      //   lng: lng,
+      //   coords: coords,
+      //   key: this.key
+      // }
+      console.log({ lat, lng, coords, key:this.key})
+      return this.http.get(this.baseUrl + '/api/distance-metro/'+ lat+ '/' +lng+ '/' + coords + '/' +this.key);
+
+      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
     }
+
+    // getDistanceMetro(lat: string, lng: string, coords: string) {
+    //   //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
+    //   return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=transit&key=' + this.key);
+    // }
 
     getStationsArray() {
       return this.http.get(this.baseUrl + '/api/stations');
     }
 
+    postTrip(trip: any) {
+      return this.http.post(this.baseUrl + '/api/trips', trip, {withCredentials: true});
+    }
 }
