@@ -347,8 +347,8 @@ export class AppComponent {
                                     this.tripObj = {
                                       origin: this.locOr,
                                       destination: this.locDest,
-                                      time: this.timeTotal,
-                                      distance: this.completeDist
+                                      time: timeTotalMess,
+                                      distance: this.timeTotal
                                     };
 
 

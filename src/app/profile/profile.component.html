@@ -1,3 +1,25 @@
 <h3> {{user.username }}</h3>
 
-<h3> {{user.trips[0].origin}} </h3>
+<h4> trips </h4>
+
+<!-- <div *ngFor='let trip of user.trips'>
+  <p>Origin: {{trip.origin}}</p>
+  <p>Destination: {{trip.destination}}</p>
+  <p>Date: {{trip.date}}</p>
+  <p>Distance: {{trip.distance}}</p>
+  <p>Time: {{trip.time}}</p>
+</div> -->
+
+<ul *ngFor='let trip of user.trips'>
+  <li>
+    <p>Origin: {{trip.origin}}</p>
+    <p>Destination: {{trip.destination}}</p>
+    <p>Date: {{trip.date}}</p>
+    <p>Distance: {{trip.distance}}</p>
+    <p>Time: {{trip.time}}</p>
+  </li>
+</ul>
+
+<h4> {{ totalDistance }} miles </h4>
+
+<h4> {{ totalTime }} seconds </h4>

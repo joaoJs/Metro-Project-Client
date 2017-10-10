@@ -1,3 +1,15 @@
 agm-map {
-  height: 300px;
+  height: 600px;
+  width: 50%;
+}
+
+.loc-form {
+  background: rgba(255,100,0,.7);
+  height: 600px;
+  width: 50%;
+  float: right;
+  position: relative;
+  bottom: 600px;
+  text-align: center;
+  padding: 20px
 }

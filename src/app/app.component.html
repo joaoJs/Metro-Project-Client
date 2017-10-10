@@ -38,6 +38,9 @@
     <a routerLink="/login"> Log In </a>
     <br>
   </nav> -->
+<div class="cont">
+
+<div class="mapWrapper">
 
   <agm-map
     [latitude]="lat"
@@ -89,7 +92,45 @@
   </agm-polyline> -->
   </agm-map>
 
-  <div class="row">
+</div>
+
+<div class="loc-form">
+  <form (ngSubmit)="submitLocations()">
+    <div class="form-group">
+      <label> Origin </label>
+      <input type="text" [(ngModel)]="locationName" name="locationName">
+    </div>
+    <div class="form-group">
+      <label> Travel mode until metro</label>
+      <select [(ngModel)]="travelModeOr" name="travelModeOr">
+        <option value="bicycling">Bike</option>
+        <option value="driving">Car</option>
+        <option value="transit">Bus</option>
+        <option value="walking">Walk</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label> Destination </label>
+      <input type="text" [(ngModel)]="destinationName" name="destinationName">
+    </div>
+    <div class="form-group">
+      <label> Travel mode from metro </label>
+      <select [(ngModel)]="travelModeDest" name="travelModeDest">
+        <option value="bicycling">Bike</option>
+        <option value="driving">Car</option>
+        <option value="transit">Bus</option>
+        <option value="walking">Walk</option>
+      </select>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+</div>
+
+  <!-- <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -107,9 +148,7 @@
               </select>
 
               <br>
-              <!-- <div class="panel-heading">
-                <h3 class="panel-title"> Destination </h3>
-              </div> -->
+
               <hr>
               <label> Destination </label>
               <input type="text" [(ngModel)]="destinationName" name="destinationName">
@@ -129,7 +168,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div *ngIf="closestMessageOrigin !== ''">
     <p>{{closestMessageOrigin}}</p>
@@ -158,7 +197,7 @@
 
   <router-outlet></router-outlet>
 
-  
+
 
 
   <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZmlw9qWUNZvc1jbUEZ8HQXHGTHXe3Jm4&libraries=geometry"> -->

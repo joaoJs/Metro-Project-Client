@@ -13,6 +13,10 @@ export class ProfileComponent implements OnInit {
     trips: [{origin: ''}]
   };
 
+  totalDistance: number = 0;
+
+  totalTime: number = 0;
+
   constructor(
     private userService: UserService
   ) { }
@@ -21,9 +25,13 @@ export class ProfileComponent implements OnInit {
     // let's get user's name and trips from the db
     this.userService.getUser()
       .subscribe(
-        (data) => {
+        (data: any) => {
           console.log("user info --> ", data);
           this.user = data;
+          data.trips.forEach(trip => {
+            this.totalDistance += trip.distance;
+            this.totalTime += trip.time;
+          });
         },
         (err) => {
           console.log('Err user info --> ', err);

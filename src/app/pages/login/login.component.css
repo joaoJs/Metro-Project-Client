@@ -5,16 +5,35 @@
   height: 800px;
 }*/
 
-.auth-form {
+/*.auth-form {
   background: rgba(255,120,0,.9);
   width: 60%;
   margin: 0 auto;
   text-align: center;
   padding: 10px;
   /*position: relative;
-  bottom: 400px;*/
+  bottom: 400px;
+}*/
+
+/*h2 {
+  text-align: center;
+}*/
+
+.formWrapper {
+  background: rgba(0,0,0,.9);
+  width:30%;
+  height: 300px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  position: relative;
+  bottom: 1300px;
+  color: white;
+  border-radius: 5px;
 }
 
-h2 {
-  text-align: center;
+.bg {
+  background: rgba(0,0,0,.2);
+  height: 800px;
+  position: relative;
+  bottom: 630px;
 }
