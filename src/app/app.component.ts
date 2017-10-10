@@ -86,7 +86,11 @@ export class AppComponent {
 
   timeMetro: number;
 
+  timeTotal: number = 0;
+
   stationsArray: any[] = [];
+
+  arrToCalc: any[] = [];
 
   constructor(
     private markerService: ApiService
@@ -105,6 +109,16 @@ export class AppComponent {
 
     kmToMiles(i) {
         return i*0.621371;
+    }
+
+    sToMin(i) {
+        let res = '';
+        if (i >= 60) {
+          res = Math.floor(i / 60) + ' minutes and ' + i % 60 + ' seconds';
+        } else {
+          res = i + 'seconds';
+        }
+        return res;
     }
 
   newMarker: any = {};
@@ -221,8 +235,10 @@ export class AppComponent {
 
                 this.closestStOr = this.stationsArray[this.indexOr]['name'];
                 this.distOr = this.kmToMiles(this.sortedDistancesOr[0][0]);
-                this.timeOr = this.sortedDistancesOr[0][2]; // --> convert as needed
-                this.closestMessageOrigin = `The closest station to your origin is ${this.closestStOr}. The distance is ${this.distOr} miles and it should take you ${this.timeOr} seconds to make this trajectory.`;
+                this.timeOr = this.sortedDistancesOr[0][2];
+                this.timeTotal += this.timeOr;
+                const timeOrMess = this.sToMin(this.timeOr);
+                this.closestMessageOrigin = `The closest station to your origin is ${this.closestStOr}. The distance is ${this.distOr} miles and it should take you ${timeOrMess} to make this trajectory.`;
 
                 this.markerService.getDestination(this.destinationName)
                   .subscribe(
@@ -243,10 +259,12 @@ export class AppComponent {
                               .sort((a,b) => a[0] - b[0]);
                             this.indexDest = this.sortedDistancesDest[0][1];
 
-                            this.closestStOr = this.stationsArray[this.indexOr]['name'];
+                            this.closestStDest = this.stationsArray[this.indexOr]['name'];
                             this.distDest = this.kmToMiles(this.sortedDistancesDest[0][0]);
-                            this.timeDest = this.sortedDistancesDest[0][2]
-                            this.closestMessageDest = `The closest station to your destination is ${this.closestStDest}. The distance is ${this.distDest} miles and it should take you ${this.timeDest} seconds to make this trajectory.`;
+                            this.timeDest = this.sortedDistancesDest[0][2];
+                            this.timeTotal += this.timeDest;
+                            const timeDestMess = this.sToMin(this.timeDest);
+                            this.closestMessageDest = `The closest station to your destination is ${this.closestStDest}. The distance is ${this.distDest} miles and it should take you ${timeDestMess} to make this trajectory.`;
 
                             console.log('BOTH!!! HERE!!! ---> ', this.closestStOr, this.closestStDest);
 
@@ -261,18 +279,29 @@ export class AppComponent {
                             // but first we need to format the destination's coords
                             const destCoords = this.closestStDestLat + ',' + this.closestStDestLng;
 
+                                    // let's get the section we need to calculate.
+                                    // for that we need to know if train is going south or north
+                                    if (this.indexOr < this.indexDest) {
+                                      this.arrToCalc = this.stationsArray.slice(this.indexOr, this.indexDest);
+                                    } else {
+                                      this.arrToCalc = this.stationsArray.slice(this.indexDest, this.indexOr);
+                                    }
 
-                                    const arrToCalc = this.stationsArray.slice(this.indexOr, this.indexDest);
-                                    console.log('ARR TO CALC!! ----> ', arrToCalc);
+                                    console.log('ARR TO CALC!! ----> ', this.arrToCalc);
                                     let dist = 0;
 
                                     let time = 0;
 
-                                    arrToCalc.forEach(s => {
+                                    this.arrToCalc.forEach(s => {
                                       console.log(s.timeToNext);
                                       dist += s.distToNext;
                                       time += s.timeToNext;
                                     });
+
+                                    // convert time to seconds and add it to total time
+                                    this.timeTotal += time * 60;
+                                    console.log("timeTotal! ---> ", this.timeTotal);
+                                    const timeTotalMess = this.sToMin(this.timeTotal);
 
                                     console.log("DIST! ----> ", this.getMiles(dist));
                                     console.log("TIME!!! ---> ", time);
@@ -282,10 +311,11 @@ export class AppComponent {
 
                                     this.completeDistMessage = `Your total trajectory is ${this.completeDist} miles long.
                                                                 You need to walk ${this.distOr} miles towards ${this.closestStOr} station and
-                                                                ${this.distDest} from ${this.closestStDest} station to ${this.locDest}`;
+                                                                ${this.distDest} from ${this.closestStDest} station to ${this.locDest}.
+                                                                Total time will be ${timeTotalMess}`;
 
 
-
+                                    this.timeTotal = 0;
 
 
                           },
