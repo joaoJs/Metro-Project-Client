@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-//import { Init } from '../init-markers';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
-export class ApiService /*extends Init*/ {
+export class ApiService {
 
   baseUrl: string = 'http://localhost:3000';
 
@@ -16,9 +15,6 @@ export class ApiService /*extends Init*/ {
   constructor(
     private http: HttpClient
   ) {
-    // super();
-    // console.log("MarkerService Initialized");
-    // this.load();
     }
 
   postSignUp(newUser: any) {
