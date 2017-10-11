@@ -28,3 +28,39 @@ agm-map {
   top: 0;
   z-index: 1000;
 }
+
+.distance-message {
+  background: rgba(255,255,200,.3);
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 10px;
+}
+
+.train-div {
+  background: red;
+  height: 200px;
+  width: 16px;
+  position:fixed;
+  left: 50%;
+  top: 50%;
+}
+
+.rail {
+  background: rgb(247,247,247);
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  height: 900px;
+  width: 16px;
+  position:fixed;
+  left: 50%;
+  top: 0;
+}
+
+/*.train-div2 {
+  background: red;
+  height: 200px;
+  width: 16px;
+  position:fixed;
+  left: 48%;
+  top: 50%;
+}*/

@@ -29,9 +29,9 @@ export class AppComponent {
 
   sortedDistances: number[] = [];
 
-  closestMessageOrigin: string = '';
+  //closestMessageOrigin: string = '';
 
-  closestMessageDest: string = '';
+  //closestMessageDest: string = '';
 
   closestStOr: string = '';
 
@@ -268,7 +268,7 @@ export class AppComponent {
                 this.timeOr = this.sortedDistancesOr[0][2];
                 this.timeTotal += this.timeOr;
                 const timeOrMess = this.sToMin(this.timeOr);
-                this.closestMessageOrigin = `The closest station to your origin is ${this.closestStOr}. The distance is ${this.distOr} miles and it should take you ${timeOrMess} to make this trajectory.`;
+                //this.closestMessageOrigin = `The closest station to your origin is ${this.closestStOr}. The distance is ${this.distOr} miles and it should take you ${timeOrMess} to make this trajectory.`;
 
                 this.markerService.getDestination(this.destinationName)
                   .subscribe(
@@ -294,7 +294,7 @@ export class AppComponent {
                             this.timeDest = this.sortedDistancesDest[0][2];
                             this.timeTotal += this.timeDest;
                             const timeDestMess = this.sToMin(this.timeDest);
-                            this.closestMessageDest = `The closest station to your destination is ${this.closestStDest}. The distance is ${this.distDest} miles and it should take you ${timeDestMess} to make this trajectory.`;
+                            //this.closestMessageDest = `The closest station to your destination is ${this.closestStDest}. The distance is ${this.distDest} miles and it should take you ${timeDestMess} to make this trajectory.`;
 
                             console.log('BOTH!!! HERE!!! ---> ', this.closestStOr, this.closestStDest);
 
@@ -342,7 +342,8 @@ export class AppComponent {
                                     this.completeDistMessage = `Your total trajectory is ${this.completeDist} miles long.
                                                                 You need to walk ${this.distOr} miles towards ${this.closestStOr} station and
                                                                 ${this.distDest} from ${this.closestStDest} station to ${this.locDest}.
-                                                                Total time will be ${timeTotalMess}`;
+                                                                Total time will be ${timeTotalMess}.
+                                                                `;
 
                                     this.tripObj = {
                                       origin: this.locOr,
@@ -353,6 +354,19 @@ export class AppComponent {
 
 
                                     this.timeTotal = 0;
+
+                              // finally, let's get the entire distance by car using the origin and dest info
+
+                              this.markerService.getCarDistance(String(this.latOr),String(this.lngOr),this.latDest+','+this.lngDest)
+                                .subscribe(
+                                  (data: any) => {
+                                    console.log('car distance --> ', data);
+                                    this.completeDistMessage +=  ` Considering the current traffic, it should take you ${data.rows[0].elements[0].duration_in_traffic.text} to drive to your destination`;
+                                  },
+                                  (err) => {
+                                    console.log('err ---> ', err);
+                                  }
+                                )
 
 
                           },

@@ -138,13 +138,7 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-  <div *ngIf="closestMessageOrigin !== ''">
-    <p>{{closestMessageOrigin}}</p>
-  </div>
-
-  <div *ngIf="closestMessageDest !== ''">
-    <p>{{closestMessageDest}}</p>
-  </div>
+</div>
 
   <div *ngIf="completeDistMessage !== ''">
     <p>{{completeDistMessage}}</p>
@@ -153,68 +147,18 @@
     <form (ngSubmit)="saveTrip()">
       <button> Save Trip </button>
     </form>
+  </div>
+
+
+<div class="rail">
+  <div class="train-div">
+
   </div>
 </div>
 
+  <!-- <div class="train-div2">
 
-<!-- </div> -->
-
-  <!-- <div class="row">
-    <div class="col-md-12">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <hr>
-          <form (ngSubmit)="submitLocations()">
-              <label> Origin </label>
-              <input type="text" [(ngModel)]="locationName" name="locationName">
-
-              <label> Travel mode until metro</label>
-              <select [(ngModel)]="travelModeOr" name="travelModeOr">
-                <option value="bicycling">Bike</option>
-                <option value="driving">Car</option>
-                <option value="transit">Bus</option>
-                <option value="walking">Walk</option>
-              </select>
-
-              <br>
-
-              <hr>
-              <label> Destination </label>
-              <input type="text" [(ngModel)]="destinationName" name="destinationName">
-
-              <label> Travel mode from metro </label>
-              <select [(ngModel)]="travelModeDest" name="travelModeDest">
-                <option value="bicycling">Bike</option>
-                <option value="driving">Car</option>
-                <option value="transit">Bus</option>
-                <option value="walking">Walk</option>
-              </select>
-
-              <br>
-              <hr>
-              <button> Submit </button>
-          </form>
-        </div>
-      </div>
-    </div>
   </div> -->
-
-  <div *ngIf="closestMessageOrigin !== ''">
-    <p>{{closestMessageOrigin}}</p>
-  </div>
-
-  <div *ngIf="closestMessageDest !== ''">
-    <p>{{closestMessageDest}}</p>
-  </div>
-
-  <div *ngIf="completeDistMessage !== ''">
-    <p>{{completeDistMessage}}</p>
-
-    <!-- render info to save trip -->
-    <form (ngSubmit)="saveTrip()">
-      <button> Save Trip </button>
-    </form>
-  </div>
 
   <!-- <form (ngSubmit)="clearMarkers()">
     <button> Clear Storage</button>

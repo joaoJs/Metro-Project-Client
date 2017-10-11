@@ -111,6 +111,10 @@ export class ApiService {
       //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
     }
 
+    getCarDistance(lat: string, lng: string, coords: string) {
+      return this.http.get(this.baseUrl + '/api/distance-car/'+ lat+ '/' +lng+ '/' + coords + '/' +this.key);
+    }
+
     // getDistanceMetro(lat: string, lng: string, coords: string) {
     //   //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
     //   return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=transit&key=' + this.key);
@@ -123,4 +127,5 @@ export class ApiService {
     postTrip(trip: any) {
       return this.http.post(this.baseUrl + '/api/trips', trip, {withCredentials: true});
     }
+
 }
