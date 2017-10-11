@@ -25,7 +25,9 @@
   <div class="total">
 <h3> Hello, {{user.username }}</h3>
 
-    <p *ngIf = 'totalDistance > 0'> You have commuted {{ totalDistance }} miles </p>
+    <p *ngIf="user.trips.length > 0"> Number of Trips: {{user.trips.length}}</p>
+
+    <p *ngIf = 'totalDistance > 0'> Total Distance: {{ totalDistance }} miles </p>
 
     <p> {{ time }} </p>
   </div>
@@ -40,8 +42,8 @@
       <p>Origin: {{trip.origin}}</p>
       <p>Destination: {{trip.destination}}</p>
       <p>Date: {{trip.date}}</p>
-      <p>Distance: {{trip.distance}}</p>
-      <p>Time: {{trip.time}}</p>
+      <p>Distance: {{trip.distance}} miles</p>
+      <p>Time: {{trip.dispTime}}</p>
     </li>
   </ul>
   </div>

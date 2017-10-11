@@ -31,25 +31,46 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         (data: any) => {
           console.log("user info --> ", data);
+          //data.trips.dispTime = 0;
           this.user = data;
-          data.trips.forEach(trip => {
+          data.trips.forEach((trip, i) => {
             console.log(trip.time);
+            trip.distance = Math.floor(trip.distance);
             this.totalDistance += trip.distance;
             this.totalTime += trip.time;
+
+            if (trip.time >= 3600) {
+              let hours = Math.floor(trip.time / 3600);
+              if (trip.time % 3600 > 0) {
+                let mins = trip.time % 3600;
+                this.user.trips[i].dispTime =  hours + 'hours and ' + mins + ' minutes.';
+              } else {
+              this.user.trips[i].dispTime =  hours + ' hours.'
+              }
+            } else if (trip.time >= 60 && trip.time < 3600) {
+              let mins = trip.time % 60;
+              this.user.trips[i].dispTime = mins + ' minutes.';
+              console.log(this.user);
+            }
+
+            if (this.totalTime < 60 && this.totalTime > 0) {
+              this.user.trips[i].dispTime = trip.time + ' seconds.'
+            }
+
           });
         this.totalDistance = Math.floor(this.totalDistance);
-
+        console.log('time -> ', this.totalTime);
         // lets transform seconds to ideal format
         if (this.totalTime >= 3600) {
           let hours = Math.floor(this.totalTime / 3600);
           if (this.totalTime % 3600 > 0) {
-            let mins = this.totalTime % 3600;
-            this.time = 'It has taken you' + hours + ' hours and ' + mins + ' minutes.';
+            let mins = (this.totalTime % 3600) % 60;
+            this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
           } else {
           this.time = 'It has taken you ' + hours + ' hours.'
           }
-        } else {
-          let mins = this.totalTime % 60;
+        } else if (this.totalTime >= 60 && this.totalTime < 3600) {
+          let mins = Math.floor(this.totalTime / 60);
           this.time = 'It has taken you ' + mins + ' minutes.';
         }
 
@@ -65,6 +86,7 @@ export class ProfileComponent implements OnInit {
         (err) => {
           console.log('Err user info --> ', err);
         }
+
       )
   }
 

@@ -20,8 +20,8 @@ agm-map {
 
 .loc-form {
   /*background: rgba(255,120,0,.8);*/
-  background: linear-gradient(to right, rgb(246,153,34)
-,rgb(243,203,152)); /* Standard syntax */
+  /*background: linear-gradient(to right, rgb(243,203,152),rgb(247,247,247)); /* Standard syntax */
+  background: rgb(247,247,247);
   text-align: center;
   padding: 20px;
   overflow: scroll;
@@ -41,7 +41,7 @@ agm-map {
 }
 
 .distance-message {
-  background: rgba(255,255,200,.3);
+  background: rgba(255,255,255,.2);
   border-radius: 5px;
   padding: 5px;
   margin-top: 10px;
@@ -49,8 +49,8 @@ agm-map {
 
 .train-div {
   /*background: rgb(100,0,180);*/
-  /*background: linear-gradient(to right, red,orange,white,orange,red);*/
-  background: linear-gradient(to right, rgb(20,0,60),magenta,rgb(20,0,60));
+  background: linear-gradient(to right, red,orange,white,orange,red);
+  /*background: linear-gradient(to right, rgb(20,0,60),magenta,rgb(20,0,60));*/
   height: 200px;
   width: 16px;
   position:fixed;
