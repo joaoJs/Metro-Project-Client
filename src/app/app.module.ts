@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 
 
@@ -22,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
     SignupComponent,
     LoginComponent,
     ProfileComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

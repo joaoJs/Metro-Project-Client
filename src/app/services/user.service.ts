@@ -14,4 +14,14 @@ export class UserService {
     return this.http.get(this.baseUrl + '/api/user', {withCredentials:true});
   }
 
+  logOut() {
+    const logoutRequest =
+      this.http.post(
+      this.baseUrl + '/api/logout',
+      { withCredentials: true }
+    );
+
+    return logoutRequest;
+  }
+
 }

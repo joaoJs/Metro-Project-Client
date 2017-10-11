@@ -1,15 +1,30 @@
 agm-map {
   height: 600px;
   width: 50%;
+  position: relative;
+  left: 50%;
 }
 
 .loc-form {
-  background: rgba(255,100,0,.7);
+  background: rgba(255,120,0,.8);
   height: 600px;
   width: 50%;
-  float: right;
+  /*float: right;*/
   position: relative;
   bottom: 600px;
   text-align: center;
-  padding: 20px
+  padding: 20px;
+  overflow: scroll;
+}
+
+.intro {
+  height: 600px;
+  background: url('https://www.theurbandeveloper.com/wp-content/uploads/Screen-Shot-2016-09-29-at-8.40.10-AM_600x380.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }

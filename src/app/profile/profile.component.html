@@ -1,6 +1,4 @@
-<h3> {{user.username }}</h3>
-
-<h4> trips </h4>
+<h3> Username: {{user.username }}</h3>
 
 <!-- <div *ngFor='let trip of user.trips'>
   <p>Origin: {{trip.origin}}</p>
@@ -10,7 +8,8 @@
   <p>Time: {{trip.time}}</p>
 </div> -->
 
-<ul *ngFor='let trip of user.trips'>
+
+<!-- <ul *ngFor='let trip of user.trips'>
   <li>
     <p>Origin: {{trip.origin}}</p>
     <p>Destination: {{trip.destination}}</p>
@@ -18,8 +17,8 @@
     <p>Distance: {{trip.distance}}</p>
     <p>Time: {{trip.time}}</p>
   </li>
-</ul>
+</ul> -->
 
-<h4> {{ totalDistance }} miles </h4>
+<h4> You have commuted {{ totalDistance }} miles </h4>
 
-<h4> {{ totalTime }} seconds </h4>
+<h4> It has taken you {{ totalTime }} </h4>

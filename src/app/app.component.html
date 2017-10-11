@@ -27,6 +27,12 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/login">Log In</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/logout">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/logout">My Trips</a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -38,7 +44,13 @@
     <a routerLink="/login"> Log In </a>
     <br>
   </nav> -->
-<div class="cont">
+
+<div class="intro">
+
+</div>
+
+
+<!-- <div class="cont"> -->
 
 <div class="mapWrapper">
 
@@ -125,10 +137,27 @@
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+
+  <div *ngIf="closestMessageOrigin !== ''">
+    <p>{{closestMessageOrigin}}</p>
+  </div>
+
+  <div *ngIf="closestMessageDest !== ''">
+    <p>{{closestMessageDest}}</p>
+  </div>
+
+  <div *ngIf="completeDistMessage !== ''">
+    <p>{{completeDistMessage}}</p>
+
+    <!-- render info to save trip -->
+    <form (ngSubmit)="saveTrip()">
+      <button> Save Trip </button>
+    </form>
+  </div>
 </div>
 
 
-</div>
+<!-- </div> -->
 
   <!-- <div class="row">
     <div class="col-md-12">
@@ -187,9 +216,9 @@
     </form>
   </div>
 
-  <form (ngSubmit)="clearMarkers()">
+  <!-- <form (ngSubmit)="clearMarkers()">
     <button> Clear Storage</button>
-  </form>
+  </form> -->
 
 
 

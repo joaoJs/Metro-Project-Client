@@ -26,14 +26,14 @@
   margin: 0 auto;
   padding: 20px 40px;
   position: relative;
-  bottom: 1300px;
+  bottom: 2300px;
   color: white;
   border-radius: 5px;
 }
 
 .bg {
   background: rgba(0,0,0,.2);
-  height: 800px;
+  height: 600px;
   position: relative;
-  bottom: 630px;
+  bottom: 1800px;
 }

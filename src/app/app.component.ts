@@ -289,7 +289,7 @@ export class AppComponent {
                               .sort((a,b) => a[0] - b[0]);
                             this.indexDest = this.sortedDistancesDest[0][1];
 
-                            this.closestStDest = this.stationsArray[this.indexOr]['name'];
+                            this.closestStDest = this.stationsArray[this.indexDest]['name'];
                             this.distDest = this.kmToMiles(this.sortedDistancesDest[0][0]);
                             this.timeDest = this.sortedDistancesDest[0][2];
                             this.timeTotal += this.timeDest;
