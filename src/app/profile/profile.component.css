@@ -15,14 +15,33 @@
 .trips-list {
   overflow: scroll;
   padding: 20px;
-  background: rgba(255,120,0,.8);
+  /*background: rgba(255,120,0,.8);*/
+  background: linear-gradient(rgb(243,203,152)
+,rgb(246,153,34));
 }
 
 .user-info {
   padding: 20px;
-  background: rgb(219,232,212);
+  background: linear-gradient(rgb(233,232,229),rgb(215,234,210));
 }
 
 h3 {
   text-align: center;
+}
+
+ul {
+  margin-top: 20px;
+}
+
+.trip-li {
+  background: rgba(255,255,255,.4);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  list-style-type: none;
+}
+
+.total,
+.trips-inner {
+  margin-top: 50px;
 }

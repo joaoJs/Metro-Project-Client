@@ -19,7 +19,9 @@ agm-map {
 }
 
 .loc-form {
-  background: rgba(255,120,0,.8);
+  /*background: rgba(255,120,0,.8);*/
+  background: linear-gradient(to right, rgb(246,153,34)
+,rgb(243,203,152)); /* Standard syntax */
   text-align: center;
   padding: 20px;
   overflow: scroll;
@@ -27,7 +29,8 @@ agm-map {
 
 .intro {
   height: 800px;
-  background: url('https://www.theurbandeveloper.com/wp-content/uploads/Screen-Shot-2016-09-29-at-8.40.10-AM_600x380.jpg') no-repeat center center fixed;
+  /*https://www.theurbandeveloper.com/wp-content/uploads/Screen-Shot-2016-09-29-at-8.40.10-AM_600x380.jpg*/
+  background: url('http://www.bombardier.com/content/dam/Websites/bombardiercom/News/BT/Bombardier-Transportation-20141027-Bombardier%20Presents%20INNOVIA%20Metro%20300%20Design%20for%20Riyadh%20Metro-Exterior.JPG/_jcr_content/renditions/original') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -45,7 +48,9 @@ agm-map {
 }
 
 .train-div {
-  background: rgb(100,0,180);
+  /*background: rgb(100,0,180);*/
+  /*background: linear-gradient(to right, red,orange,white,orange,red);*/
+  background: linear-gradient(to right, rgb(20,0,60),magenta,rgb(20,0,60));
   height: 200px;
   width: 16px;
   position:fixed;

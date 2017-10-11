@@ -15,7 +15,7 @@ export class AppComponent {
 
   markers: any[] = [];
 
-  color: string = 'rgba(255,120,0,1)';
+  color: string = 'rgba(255,100,0,1)';
 
   colorNew: string = 'rgb(100,0,180)';
 
@@ -348,8 +348,8 @@ export class AppComponent {
                                     this.tripObj = {
                                       origin: this.locOr,
                                       destination: this.locDest,
-                                      time: timeTotalMess,
-                                      distance: this.timeTotal
+                                      time: this.timeTotal,
+                                      distance: this.completeDist
                                     };
 
 

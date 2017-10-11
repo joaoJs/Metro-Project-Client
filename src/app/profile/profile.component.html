@@ -22,17 +22,21 @@
 <div class="profile-wrapper">
 
 <div class="user-info">
+  <div class="total">
 <h3> Hello, {{user.username }}</h3>
 
-<h4> You have commuted {{ totalDistance }} miles </h4>
+    <p *ngIf = 'totalDistance > 0'> You have commuted {{ totalDistance }} miles </p>
 
-<h4> It has taken you {{ totalTime }} </h4>
+    <p> {{ time }} </p>
+  </div>
+
 </div>
 
 <div class="trips-list">
+  <div class="trips-inner">
   <h3> My Trips </h3>
-  <ul >
-    <li *ngFor='let trip of user.trips'>
+  <ul>
+    <li *ngFor='let trip of user.trips' class="trip-li">
       <p>Origin: {{trip.origin}}</p>
       <p>Destination: {{trip.destination}}</p>
       <p>Date: {{trip.date}}</p>
@@ -40,6 +44,7 @@
       <p>Time: {{trip.time}}</p>
     </li>
   </ul>
+  </div>
 </div>
 
 </div>
