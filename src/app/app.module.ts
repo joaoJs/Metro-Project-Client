@@ -5,6 +5,7 @@ import { ApiService } from './services/api.service';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -32,7 +33,7 @@ import { LogoutComponent } from './pages/logout/logout.component';
     FormsModule,
     CommonModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBZmlw9qWUNZvc1jbUEZ8HQXHGTHXe3Jm4'
+      apiKey: environment.googleApi
     })
   ],
   providers: [ApiService, UserService],

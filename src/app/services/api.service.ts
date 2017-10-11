@@ -12,7 +12,7 @@ export class ApiService {
 
   distanceUrl: string = 'https://maps.googleapis.com/maps/api/distancematrix/json?';
 
-  key: string = 'AIzaSyBZmlw9qWUNZvc1jbUEZ8HQXHGTHXe3Jm4';
+  key: string = environment.googleApi;
 
   constructor(
     private http: HttpClient
