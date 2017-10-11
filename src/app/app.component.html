@@ -18,20 +18,23 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">ifMetro</a>
+  <a class="navbar-brand" (click)="goTo($event,'.intro')" href="#">ifMetro</a>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" routerLink="/signup">Sign Up</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">Log In</a>
+        <a class="nav-link" (click)="goTo($event, '.formWrapper')" routerLink="/login">Log In</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/logout">Log Out</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/logout">My Trips</a>
+        <a class="nav-link" (click)="goTo($event, '.loc-form')" href="#0">Make a Trip</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="goTo($event, '.profile-wrapper')" href="#0">My Trips</a>
       </li>
     </ul>
   </div>
@@ -50,14 +53,14 @@
 </div>
 
 
-<!-- <div class="cont"> -->
+<div class="cont">
 
 <div class="mapWrapper">
 
   <agm-map
     [latitude]="lat"
     [longitude]="lng"
-    [zoom]="zoom"
+    [zoom]="11"
     (mapClick)="mapClicked($event)">
     <agm-marker *ngFor="let m of markers; let i = index"
     [latitude]="m.lat"
@@ -107,10 +110,11 @@
 </div>
 
 <div class="loc-form">
-  <form (ngSubmit)="submitLocations()">
+  <form (ngSubmit)="submitLocations()" class="inner-form">
     <div class="form-group">
       <label> Origin </label>
-      <input type="text" [(ngModel)]="locationName" name="locationName">
+      <input type="text" [(ngModel)]="locationName" name="locationName"
+        class="form-control">
     </div>
     <div class="form-group">
       <label> Travel mode until metro</label>
@@ -123,7 +127,8 @@
     </div>
     <div class="form-group">
       <label> Destination </label>
-      <input type="text" [(ngModel)]="destinationName" name="destinationName">
+      <input type="text" [(ngModel)]="destinationName" name="destinationName"
+        class="form-control">
     </div>
     <div class="form-group">
       <label> Travel mode from metro </label>
@@ -138,16 +143,17 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-</div>
-
-  <div *ngIf="completeDistMessage !== ''">
+  <div *ngIf="completeDistMessage !== ''" class="distance-message">
     <p>{{completeDistMessage}}</p>
 
     <!-- render info to save trip -->
     <form (ngSubmit)="saveTrip()">
-      <button> Save Trip </button>
+      <button type="submit" class="btn btn-primary"> Save Trip </button>
     </form>
   </div>
+
+</div> <!-- .loc-form -->
+</div> <!-- .cont -->
 
 
 <div class="rail">

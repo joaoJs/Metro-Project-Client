@@ -1,4 +1,4 @@
-<h3> Username: {{user.username }}</h3>
+
 
 <!-- <div *ngFor='let trip of user.trips'>
   <p>Origin: {{trip.origin}}</p>
@@ -19,6 +19,27 @@
   </li>
 </ul> -->
 
+<div class="profile-wrapper">
+
+<div class="user-info">
+<h3> Hello, {{user.username }}</h3>
+
 <h4> You have commuted {{ totalDistance }} miles </h4>
 
 <h4> It has taken you {{ totalTime }} </h4>
+</div>
+
+<div class="trips-list">
+  <h3> My Trips </h3>
+  <ul >
+    <li *ngFor='let trip of user.trips'>
+      <p>Origin: {{trip.origin}}</p>
+      <p>Destination: {{trip.destination}}</p>
+      <p>Date: {{trip.date}}</p>
+      <p>Distance: {{trip.distance}}</p>
+      <p>Time: {{trip.time}}</p>
+    </li>
+  </ul>
+</div>
+
+</div>

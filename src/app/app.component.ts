@@ -15,9 +15,9 @@ export class AppComponent {
 
   markers: any[] = [];
 
-  color: string = 'rgb(255,0,0)';
+  color: string = 'rgba(255,120,0,1)';
 
-  colorNew: string = 'rgb(0,0,255)';
+  colorNew: string = 'rgb(100,0,180)';
 
   locationName: string = "";
 
@@ -339,9 +339,9 @@ export class AppComponent {
                                     this.completeDist = this.distOr + this.distDest + this.distSt;
                                     console.log('COMPLETE! ---> ', this.completeDist);
 
-                                    this.completeDistMessage = `Your total trajectory is ${this.completeDist} miles long.
-                                                                You need to walk ${this.distOr} miles towards ${this.closestStOr} station and
-                                                                ${this.distDest} from ${this.closestStDest} station to ${this.locDest}.
+                                    this.completeDistMessage = `Your total trajectory is ${this.completeDist.toFixed(1)} miles long.
+                                                                You need to walk ${this.distOr.toFixed(1)} miles towards ${this.closestStOr} station and
+                                                                ${this.distDest.toFixed(1)} miles from ${this.closestStDest} station to your destination.
                                                                 Total time will be ${timeTotalMess}.
                                                                 `;
 
@@ -411,6 +411,13 @@ export class AppComponent {
         }
       )
 
+  }
+
+  goTo(ev, selector) {
+    ev.preventDefault();
+    const locForm = document.querySelector(selector) as HTMLElement;
+    console.log(locForm);
+    window.scrollTo(0, locForm.offsetTop);
   }
 
 }

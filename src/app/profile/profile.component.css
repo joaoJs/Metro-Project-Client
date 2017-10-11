@@ -1,0 +1,28 @@
+.profile-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  /*background: rgb(247,247,247);*/
+}
+
+.user-info,
+.trips-list {
+  height: 800px;
+  width: 50%;
+  box-sizing: border-box;
+  /*float: right;*/
+}
+
+.trips-list {
+  overflow: scroll;
+  padding: 20px;
+  background: rgba(255,120,0,.8);
+}
+
+.user-info {
+  padding: 20px;
+  background: rgb(219,232,212);
+}
+
+h3 {
+  text-align: center;
+}
