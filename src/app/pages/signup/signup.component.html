@@ -1,4 +1,4 @@
-<div class="formWrapper">
+<!-- <div class="formWrapper">
 
  <h1> Sign up </h1>
 
@@ -21,8 +21,30 @@
   <button> Signup </button>
 </form>
 
-</div>
+</div> -->
 
-<div class="nextToForm">
+<div class="auth-form">
+
+<h2> Sign Up </h2>
+
+<form (ngSubmit)="submitSignUpForm()">
+  <div class="form-group">
+    <label for="username"> Username </label>
+    <input  id="username" type="text" placeholder="Joe"
+      [(ngModel)]="newUser.username" name="username" class="form-control">
+  </div>
+  <div class="form-group">
+  <label for="email"> Email </label>
+  <input  id="email" type="email" placeholder="Joe@ironhack.com"
+    [(ngModel)]="newUser.email" name="email" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="password"> Password </label>
+    <input  id="password" type="password" placeholder="****"
+      [(ngModel)]="newUser.password" name="password" class="form-control">
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
 </div>

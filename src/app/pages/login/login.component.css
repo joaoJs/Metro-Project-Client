@@ -5,19 +5,21 @@
   height: 800px;
 }*/
 
-/*.auth-form {
-  background: rgba(255,120,0,.9);
-  width: 60%;
-  margin: 0 auto;
+.auth-form {
+  /*background: rgba(255,120,0,.9);*/
+  background: rgb(207,225,233);
+  width: 50%;
   text-align: center;
   padding: 10px;
   /*position: relative;
-  bottom: 400px;
-}*/
+  bottom: 400px;*/
+  box-sizing: border-box;
 
-/*h2 {
+}
+
+h2 {
   text-align: center;
-}*/
+}
 
 /*.formWrapper {
   background: rgba(0,0,0,.9);
