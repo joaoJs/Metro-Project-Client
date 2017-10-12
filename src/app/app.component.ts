@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TripsService } from './services/trips.service';
 
 declare var google: any;
 
@@ -12,6 +13,8 @@ declare var google: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+
 
   markers: any[] = [];
 
@@ -125,7 +128,9 @@ export class AppComponent {
 
   constructor(
     private markerService: ApiService,
-    private activatedThang: ActivatedRoute
+    private activatedThang: ActivatedRoute,
+    private router: Router,
+    private tripsService: TripsService
   ) {
     // this.markers = this.markerService.getMarkers();
   }
@@ -245,7 +250,7 @@ export class AppComponent {
           // adding marker
           this.addMarker(this.locOr,this.latOr,this.lngOr);
           //this.coords = this.allStations.map(s => s.lat + ',' + s.lng).join('|');
-          this.stationsArray.forEach(s=> console.log(s.latLng));
+          this.stationsArray.forEach(s=> console.log('Before Coords', s.latLng));
           this.coords = this.stationsArray.map(s => s.latLng.lat + ',' + s.latLng.lng).join('|');
 
 
@@ -405,6 +410,9 @@ export class AppComponent {
         (data) => {
           console.log('Saved Trip --> ',data);
           // reset tripObj to empty obj
+          this.router.navigate(['profile']);
+          //goTo()
+          this.tripsService.updateTrips(data)
         },
         (err) => {
           console.log('ERR --> ', err);

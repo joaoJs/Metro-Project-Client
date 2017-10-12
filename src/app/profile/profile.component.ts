@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { TripsService } from '../services/trips.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,10 +23,38 @@ export class ProfileComponent implements OnInit {
   time: string = '';
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private tripsService: TripsService
   ) { }
 
   ngOnInit() {
+    this.tripsService.tripSubject$.subscribe(
+      (newTrip: any) => {
+        newTrip.distance = Math.floor(newTrip.distance);
+        console.log('newTrip time! --> ',newTrip.time);
+        if (newTrip.time >= 3600) {
+          let hours = Math.floor(newTrip.time / 3600);
+          if (newTrip.time % 3600 > 0) {
+            let mins = newTrip.time % 3600;
+            newTrip.dispTime =  hours + 'hours and ' + mins + ' minutes.';
+          } else {
+          newTrip.dispTime =  hours + ' hours.'
+          }
+        } else if (newTrip.time >= 60 && newTrip.time < 3600) {
+          let mins = Math.floor(newTrip.time / 60);
+          newTrip.dispTime = mins + ' minutes.';
+
+        }
+
+        if (this.totalTime < 60 && this.totalTime > 0) {
+          newTrip.dispTime = newTrip.time + ' seconds.'
+        }
+        console.log('newTrip Data! --> ', newTrip);
+
+        this.user.trips.push(newTrip);
+      }
+    )
+
     // let's get user's name and trips from the db
     this.userService.getUser()
       .subscribe(
@@ -66,6 +95,7 @@ export class ProfileComponent implements OnInit {
           if (this.totalTime % 3600 > 0) {
             let mins = (this.totalTime % 3600) % 60;
             this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
+
           } else {
           this.time = 'It has taken you ' + hours + ' hours.'
           }
@@ -88,6 +118,9 @@ export class ProfileComponent implements OnInit {
         }
 
       )
+
+
+
   }
 
 }

@@ -6,6 +6,7 @@ import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
+import { TripsService } from './services/trips.service';
 
 import { AgmCoreModule } from '@agm/core';
 
@@ -36,7 +37,7 @@ import { LogoutComponent } from './pages/logout/logout.component';
       apiKey: environment.googleApi
     })
   ],
-  providers: [ApiService, UserService],
+  providers: [ApiService, UserService, TripsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
