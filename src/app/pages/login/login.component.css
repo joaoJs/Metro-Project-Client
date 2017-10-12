@@ -5,10 +5,18 @@
   height: 800px;
 }*/
 
-.auth-form {
+.cont{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.auth-form,
+.auth-form-sign {
   /*background: rgba(255,120,0,.9);*/
   background: rgb(207,225,233);
   width: 50%;
+  height: 800px;
   text-align: center;
   padding: 10px;
   /*position: relative;
@@ -17,8 +25,17 @@
 
 }
 
+.auth-form {
+  background: rgb(247,247,247);
+}
+
 h2 {
   text-align: center;
+}
+
+.form-inner {
+  margin-top: 80px;
+  padding: 20px;
 }
 
 /*.formWrapper {

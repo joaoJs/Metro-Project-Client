@@ -12,20 +12,16 @@ import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './profile/profile.component';
-import { LogoutComponent } from './pages/logout/logout.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
     LoginComponent,
-    ProfileComponent,
-    LogoutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

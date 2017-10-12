@@ -30,6 +30,8 @@
     <p *ngIf = 'totalDistance > 0'> Total Distance: {{ totalDistance }} miles </p>
 
     <p> {{ time }} </p>
+
+    <button (click)="goTo($event, '.loc-form')" class="btn btn-primary"> Make a new trip </button>
   </div>
 
 </div>
@@ -44,6 +46,7 @@
       <p>Date: {{trip.date}}</p>
       <p>Distance: {{trip.distance}} miles</p>
       <p>Time: {{trip.dispTime}}</p>
+
     </li>
   </ul>
   </div>

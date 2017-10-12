@@ -14,6 +14,13 @@ export class ProfileComponent implements OnInit {
     trips: [{origin: ''}]
   };
 
+  goTo(ev, selector) {
+    ev.preventDefault();
+    const locForm = document.querySelector(selector) as HTMLElement;
+    console.log(locForm);
+    window.scrollTo(0, locForm.offsetTop);
+  }
+
   totalDistance: number = 0;
 
   totalTime: number = 0;

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from './services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TripsService } from './services/trips.service';
+import { UserService } from './services/user.service';
+
 
 declare var google: any;
 
@@ -12,9 +14,34 @@ declare var google: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
+  userInfo: any;
 
+  ngOnInit() {
+
+    this.userService.loginStatusNotifier.subscribe(
+      (userInfo) => {
+        this.userInfo = userInfo.userInfo;
+        console.log('from subject! --> ', userInfo);
+        console.log('is logged in --> ', userInfo.isLoggedIn);
+      }
+    )
+
+    this.userService.getLoginStatus()
+      .subscribe(
+        (user: any) =>{
+          if (user.isLoggedIn) {
+            this.userInfo = user.userInfo
+          }
+          else {
+            this.userInfo = null;
+          }
+          console.log(this.userInfo);
+        }
+
+      )
+  }
 
   markers: any[] = [];
 
@@ -130,7 +157,8 @@ export class AppComponent {
     private markerService: ApiService,
     private activatedThang: ActivatedRoute,
     private router: Router,
-    private tripsService: TripsService
+    private tripsService: TripsService,
+    private userService: UserService
   ) {
     // this.markers = this.markerService.getMarkers();
   }
@@ -225,8 +253,18 @@ export class AppComponent {
     this.markerService.removeMarker(index);
   }
 
+  errorMessageForm: string = '';
 
   submitLocations() {
+    // check if all input was provided
+    if (this.locationName === '' ||
+        this.travelModeOr === '' ||
+        this.destinationName === '' ||
+        this.travelModeDest === '') {
+          this.errorMessageForm = 'Please provide all fields.';
+    } else {
+
+      this.errorMessageForm = '';
 
   this.markerService.getStationsArray()
     .subscribe(
@@ -345,8 +383,8 @@ export class AppComponent {
                                     console.log('COMPLETE! ---> ', this.completeDist);
 
                                     this.completeDistMessage = `Your total trajectory is ${Math.floor(this.completeDist)} miles long.
-                                                                You need to walk ${this.distOr.toFixed(1)} miles towards ${this.closestStOr} station and
-                                                                ${this.distDest.toFixed(1)} miles from ${this.closestStDest} station to your destination.
+                                                                You are ${this.distOr.toFixed(1)} miles away from ${this.closestStOr} station and your destination is
+                                                                ${this.distDest.toFixed(1)} miles away from ${this.closestStDest} Station.
                                                                 Total time will be ${timeTotalMess}.
                                                                 `;
 
@@ -402,6 +440,8 @@ export class AppComponent {
 
   }
 
+  }
+
   saveTrip() {
     console.log(this.tripObj);
     // we need to send the trip object to save on users trip
@@ -412,7 +452,8 @@ export class AppComponent {
           // reset tripObj to empty obj
           this.router.navigate(['profile']);
           //goTo()
-          this.tripsService.updateTrips(data)
+          this.tripsService.updateTrips(data);
+          this.goTo('_', '.profile-wrapper');
         },
         (err) => {
           console.log('ERR --> ', err);
@@ -422,10 +463,26 @@ export class AppComponent {
   }
 
   goTo(ev, selector) {
-    ev.preventDefault();
+    if (ev !== '_') {
+      ev.preventDefault();
+    }
     const locForm = document.querySelector(selector) as HTMLElement;
     console.log(locForm);
     window.scrollTo(0, locForm.offsetTop);
+  }
+
+  logMeOut() {
+
+    this.userService.logOut()
+      .subscribe(
+        (data) => {
+          console.log('Log Out Success! ---> ', data);
+          //this.router.navigate(['/login']);
+        },
+        (err) => {
+          console.log("err logout --> ", err);
+        }
+      )
   }
 
 }

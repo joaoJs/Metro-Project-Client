@@ -44,3 +44,7 @@ ul {
 .trips-inner {
   margin-top: 50px;
 }
+
+li:last-child {
+  background: rgba(100,100,100,.1);
+}

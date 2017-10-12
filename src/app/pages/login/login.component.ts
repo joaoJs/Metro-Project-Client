@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,8 +14,16 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
+  newUser: any = {
+    username: '',
+    email: '',
+    password: ''
+  }
+
+  errorMessage: string = '';
+
   constructor(
-    private api: ApiService,
+    private api: UserService,
     private router: Router
   ) { }
 
@@ -27,12 +35,46 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log('Login Success! ---> ', data);
-          this.router.navigate(['profile']);
+          this.api.updateUserInfo(
+            {
+              isLoggedIn: true,
+              userInfo: data
+            }
+          );
+          // this.router.navigate(['']);
+          // this.goTo('.intro');
         },
         (err) => {
           console.log('Err Log In ----> ', err);
         }
       )
+  }
+
+  signupSubmit() {
+    this.api.postSignup(this.newUser)
+      .subscribe(
+        (data) => {
+          this.router.navigate(['']);
+          this.goTo('.intro');
+        },
+
+        (err) => {
+          console.log('Error ---> ', err);
+          if (err.status === 400) {
+            this.errorMessage = 'Validation Error';
+          }
+          else {
+            this.errorMessage = "Something went wrong. Try again later."
+          }
+        }
+      )
+  }
+
+  goTo(selector) {
+    //ev.preventDefault();
+    const locForm = document.querySelector(selector) as HTMLElement;
+    console.log(locForm);
+    window.scrollTo(0, locForm.offsetTop);
   }
 
 }

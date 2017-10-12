@@ -20,21 +20,23 @@
   </button>
   <a class="navbar-brand" (click)="goTo($event,'.intro')" href="#">ifMetro</a>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="!userInfo">
       <li class="nav-item">
-        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="/signup">Sign Up</a>
+        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="signup">Sign Up</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="/login">Log In</a>
+        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="login">Log In</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/logout">Log Out</a>
-      </li>
+    </ul>
+    <ul class="navbar-nav" *ngIf="userInfo">
       <li class="nav-item">
         <a class="nav-link" (click)="goTo($event, '.loc-form')" href="#0">Make a Trip</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="goTo($event, '.profile-wrapper')" href="#0">My Trips</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logMeOut()" href="#0">Log Out</a>
       </li>
     </ul>
   </div>
@@ -53,7 +55,10 @@
 </div>
 
 
-<div class="cont">
+<app-login *ngIf="!userInfo"></app-login>
+
+
+<div class="cont" *ngIf="userInfo">
 
 <div class="mapWrapper">
 
@@ -141,6 +146,7 @@
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Submit</button>
+    <p *ngIf="errorMessageForm !== ''" class="error">{{errorMessageForm}}</p>
   </form>
 
   <div *ngIf="completeDistMessage !== ''" class="distance-message">
@@ -154,6 +160,9 @@
 
 </div> <!-- .loc-form -->
 </div> <!-- .cont -->
+
+
+<app-profile *ngIf="userInfo"></app-profile>
 
 
 <!-- <div class="rail">
@@ -174,7 +183,7 @@
 
   <!-- AIzaSyBZmlw9qWUNZvc1jbUEZ8HQXHGTHXe3Jm4 -->
 
-  <router-outlet></router-outlet>
+  <!-- <router-outlet></router-outlet> -->
 
 
 

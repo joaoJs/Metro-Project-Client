@@ -74,6 +74,11 @@ agm-map {
   padding: 0 50px;
 }
 
+.error {
+  margin-top: 5px;
+  color: red;
+}
+
 /*.train-div2 {
   background: red;
   height: 200px;
