@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../environments/environment';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class UserService {
@@ -23,45 +24,40 @@ export class UserService {
   }
 
   postSignup(userInfo: any) {
-    const signUpRequest =
+    return(
       this.http.post(
-      this.baseUrl + '/api/process-signup',
-      userInfo,
-      { withCredentials: true }
+        this.baseUrl + '/api/process-signup',
+        userInfo,
+        { withCredentials: true }
+      )
+      .do(
+        (user) => {
+          console.log('sign up success! --> ', user);
+          this.loginStatusSubject.next({
+            isLoggedIn: true,
+            userInfo: userInfo
+          });
+        }
+      )
     );
-
-    // logs the user in when he signs up.
-    signUpRequest.subscribe(
-      (user) => {
-        console.log('sign up success! --> ', user);
-        this.loginStatusSubject.next({
-          isLoggedIn: true,
-          userInfo: userInfo
-        });
-      }
-    );
-
-    return signUpRequest;
   }
 
   postLogIn(info: any) {
-    const loginRequest =
+    return (
       this.http.post(
       this.baseUrl + '/api/process-login',
       info,
       { withCredentials: true }
-    );
-
-    loginRequest.subscribe(
+    )
+    .do(
       (user) => {
         this.loginStatusSubject.next({
           isLoggedIn: true,
           userInfo: user
         });
       }
-    );
-
-    return loginRequest;
+    )
+  );
 
 
   }
@@ -71,13 +67,12 @@ export class UserService {
   }
 
   getLoginStatus() {
-    const loginStatusRequest =
+    return(
       this.http.get(
       this.baseUrl + '/api/checklogin',
       { withCredentials: true }
-    );
-
-    loginStatusRequest.subscribe(
+    )
+    .do(
       (user) => {
         this.loginStatusSubject.next(
           user
@@ -87,26 +82,28 @@ export class UserService {
         console.log('err login status --> ', err);
       }
     )
-    return loginStatusRequest;
+  );
+  }
+
+  updateUser(user: any) {
+    return this.http.post( this.baseUrl + '/api/update-user', user, {withCredentials: true});
   }
 
   logOut() {
     console.log('before request for logout');
-    const logoutRequest =
+    return(
       this.http.delete(
       this.baseUrl + '/api/logout',
       { withCredentials: true }
-    );
-
-    logoutRequest.subscribe(
+    )
+    .do(
       () => {
         this.loginStatusSubject.next(
           { isLoggedIn: false }
         );
       }
     )
-
-    return logoutRequest;
+  );
   }
 
 }

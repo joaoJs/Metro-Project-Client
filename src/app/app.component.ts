@@ -288,7 +288,7 @@ export class AppComponent implements OnInit {
           // adding marker
           this.addMarker(this.locOr,this.latOr,this.lngOr);
           //this.coords = this.allStations.map(s => s.lat + ',' + s.lng).join('|');
-          this.stationsArray.forEach(s=> console.log('Before Coords', s.latLng));
+          //this.stationsArray.forEach(s=> console.log('Before Coords', s.latLng));
           this.coords = this.stationsArray.map(s => s.latLng.lat + ',' + s.latLng.lng).join('|');
 
 
@@ -447,7 +447,7 @@ export class AppComponent implements OnInit {
     // we need to send the trip object to save on users trip
     this.markerService.postTrip(this.tripObj)
       .subscribe(
-        (data) => {
+        (data: any) => {
           console.log('Saved Trip --> ',data);
           // reset tripObj to empty obj
           this.router.navigate(['profile']);
@@ -477,7 +477,8 @@ export class AppComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log('Log Out Success! ---> ', data);
-          //this.router.navigate(['/login']);
+          // this.router.navigate(['/login']);
+          this.goTo('_','.auth-form');
         },
         (err) => {
           console.log("err logout --> ", err);

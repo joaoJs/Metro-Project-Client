@@ -5,10 +5,10 @@ import { AppComponent } from './app.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent},
-  { path: 'signup', component: LoginComponent},
-  { path: 'login', component: LoginComponent},
-  // { path: 'profile', component: ProfileComponent},
+  // { path: '', component: AppComponent},
+  // { path: 'signup', component: LoginComponent},
+  // { path: 'login', component: LoginComponent},
+  { path: 'profile', component: ProfileComponent},
   // { path: 'logout', component: LogoutComponent}
 ];
 

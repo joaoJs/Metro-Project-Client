@@ -14,4 +14,6 @@ export class TripsService {
     this.tripSubject.next(trip);
   }
 
+  
+
 }

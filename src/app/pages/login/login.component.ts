@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { TripsService } from '../../services/trips.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private api: UserService,
-    private router: Router
+    private router: Router,
+    private trips: TripsService
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
   submitLogInForm() {
     this.api.postLogIn(this.user)
       .subscribe(
-        (data) => {
+        (data: any) => {
           console.log('Login Success! ---> ', data);
           this.api.updateUserInfo(
             {
@@ -41,8 +43,9 @@ export class LoginComponent implements OnInit {
               userInfo: data
             }
           );
-          // this.router.navigate(['']);
-          // this.goTo('.intro');
+          //this.trips.updateTrips(data.trips[data.trips.length - 1]);
+          this.router.navigate(['profile']);
+          //this.goTo('.loc-form');
         },
         (err) => {
           console.log('Err Log In ----> ', err);
@@ -54,8 +57,8 @@ export class LoginComponent implements OnInit {
     this.api.postSignup(this.newUser)
       .subscribe(
         (data) => {
-          this.router.navigate(['']);
-          this.goTo('.intro');
+          this.router.navigate(['profile']);
+          //this.goTo('.loc-form');
         },
 
         (err) => {

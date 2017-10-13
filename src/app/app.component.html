@@ -22,10 +22,10 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav" *ngIf="!userInfo">
       <li class="nav-item">
-        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="signup">Sign Up</a>
+        <a class="nav-link" (click)="goTo($event, '.auth-form')" href="#0">Sign Up</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="goTo($event, '.auth-form')" routerLink="login">Log In</a>
+        <a class="nav-link" (click)="goTo($event, '.auth-form')" href="#0">Log In</a>
       </li>
     </ul>
     <ul class="navbar-nav" *ngIf="userInfo">
@@ -33,7 +33,7 @@
         <a class="nav-link" (click)="goTo($event, '.loc-form')" href="#0">Make a Trip</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="goTo($event, '.profile-wrapper')" href="#0">My Trips</a>
+        <a class="nav-link" (click)="goTo($event, '.profile-wrapper')" href="/profile">My Trips</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" (click)="logMeOut()" href="#0">Log Out</a>
@@ -162,7 +162,10 @@
 </div> <!-- .cont -->
 
 
-<app-profile *ngIf="userInfo"></app-profile>
+
+<!-- <app-profile *ngIf="userInfo"></app-profile> -->
+<router-outlet></router-outlet>
+
 
 
 <!-- <div class="rail">

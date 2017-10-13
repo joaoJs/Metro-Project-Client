@@ -15,7 +15,9 @@ export class ProfileComponent implements OnInit {
   };
 
   goTo(ev, selector) {
-    ev.preventDefault();
+    if (ev !== '_') {
+      ev.preventDefault();
+    }
     const locForm = document.querySelector(selector) as HTMLElement;
     console.log(locForm);
     window.scrollTo(0, locForm.offsetTop);
@@ -24,6 +26,8 @@ export class ProfileComponent implements OnInit {
   totalDistance: number = 0;
 
   totalTime: number = 0;
+
+  newTripTime: number = 0;
 
   distance: string = '';
 
@@ -35,10 +39,27 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.goTo('_','.profile-wrapper');
+
+    this.updateProfile();
+
+  }
+
+
+  updateProfile() {
     this.tripsService.tripSubject$.subscribe(
-      (newTrip: any) => {
+      (user: any) => {
+        const newTrip = user.trips[user.trips.length - 1];
         newTrip.distance = Math.floor(newTrip.distance);
-        console.log('newTrip time! --> ',newTrip.time);
+
+
+        this.totalDistance += newTrip.distance;
+
+        console.log("Total Time Before --> ", this.totalTime);
+        this.totalTime += newTrip.time;
+        console.log("Total Time After --> ",this.totalTime);
+
         if (newTrip.time >= 3600) {
           let hours = Math.floor(newTrip.time / 3600);
           if (newTrip.time % 3600 > 0) {
@@ -53,12 +74,46 @@ export class ProfileComponent implements OnInit {
 
         }
 
-        if (this.totalTime < 60 && this.totalTime > 0) {
+        if (newTrip.time < 60 && newTrip.time > 0) {
           newTrip.dispTime = newTrip.time + ' seconds.'
         }
         console.log('newTrip Data! --> ', newTrip);
 
         this.user.trips.push(newTrip);
+        console.log('after pushing--> ', this.user);
+
+        if (this.totalTime >= 3600) {
+          let hours = Math.floor(this.totalTime / 3600);
+          if (this.totalTime % 3600 > 0) {
+            let mins = (this.totalTime % 3600) % 60;
+            this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
+
+          } else {
+          this.time = 'Total time: ' + hours + ' hours.'
+          }
+        } else if (this.totalTime >= 60 && this.totalTime < 3600) {
+          let mins = Math.floor(this.totalTime / 60);
+          this.time = 'Total time: ' + mins + ' minutes.';
+        }
+
+        if (this.totalTime < 60 && this.totalTime > 0) {
+          this.time = 'Total time: ' +this.totalTime + 'seconds.'
+        }
+
+        if (this.totalTime === 0) {
+          this.time = "You haven't commuted yet.";
+        }
+        // update user in the db
+        // this.userService.updateUser(this.user)
+        //   .subscribe(
+        //     (updatedUser) => {
+        //       console.log('success update! -> ', updatedUser);
+        //     },
+        //     (err) => {
+        //       console.log('err update --> ', err);
+        //     }
+        //   )
+        console.log('subscribe subject time ****', this.time)
       }
     )
 
@@ -69,6 +124,8 @@ export class ProfileComponent implements OnInit {
           console.log("user info --> ", data);
           //data.trips.dispTime = 0;
           this.user = data;
+          console.log('TOTAL TIME HERE!!!! ---> ', this.totalTime);
+          console.log('NEW TRIP TIME ---> ', this.newTripTime);
           data.trips.forEach((trip, i) => {
             console.log(trip.time);
             trip.distance = Math.floor(trip.distance);
@@ -84,7 +141,7 @@ export class ProfileComponent implements OnInit {
               this.user.trips[i].dispTime =  hours + ' hours.'
               }
             } else if (trip.time >= 60 && trip.time < 3600) {
-              let mins = trip.time % 60;
+              let mins = Math.floor(trip.time /  60);
               this.user.trips[i].dispTime = mins + ' minutes.';
               console.log(this.user);
             }
@@ -104,20 +161,22 @@ export class ProfileComponent implements OnInit {
             this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
 
           } else {
-          this.time = 'It has taken you ' + hours + ' hours.'
+          this.time = 'Total time: ' + hours + ' hours.'
           }
         } else if (this.totalTime >= 60 && this.totalTime < 3600) {
           let mins = Math.floor(this.totalTime / 60);
-          this.time = 'It has taken you ' + mins + ' minutes.';
+          this.time = 'Total time: ' + mins + ' minutes.';
         }
 
         if (this.totalTime < 60 && this.totalTime > 0) {
-          this.time = 'It has taken you ' +this.totalTime + 'seconds.'
+          this.time = 'Total time: ' +this.totalTime + 'seconds.'
         }
 
         if (this.totalTime === 0) {
           this.time = "You haven't commuted yet.";
         }
+
+        console.log('get user time ****', this.time)
 
         },
         (err) => {
@@ -125,9 +184,8 @@ export class ProfileComponent implements OnInit {
         }
 
       )
-
-
-
   }
+
+
 
 }
