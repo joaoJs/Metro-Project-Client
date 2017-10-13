@@ -46,6 +46,10 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  secToHour(i) {
+
+  }
+
 
   updateProfile() {
     this.tripsService.tripSubject$.subscribe(
@@ -63,7 +67,7 @@ export class ProfileComponent implements OnInit {
         if (newTrip.time >= 3600) {
           let hours = Math.floor(newTrip.time / 3600);
           if (newTrip.time % 3600 > 0) {
-            let mins = newTrip.time % 3600;
+            let mins = Math.floor(newTrip.time / 60);
             newTrip.dispTime =  hours + 'hours and ' + mins + ' minutes.';
           } else {
           newTrip.dispTime =  hours + ' hours.'
@@ -85,7 +89,7 @@ export class ProfileComponent implements OnInit {
         if (this.totalTime >= 3600) {
           let hours = Math.floor(this.totalTime / 3600);
           if (this.totalTime % 3600 > 0) {
-            let mins = (this.totalTime % 3600) % 60;
+            let mins = Math.floor((this.totalTime % 3600) / 60);
             this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
 
           } else {
@@ -103,16 +107,7 @@ export class ProfileComponent implements OnInit {
         if (this.totalTime === 0) {
           this.time = "You haven't commuted yet.";
         }
-        // update user in the db
-        // this.userService.updateUser(this.user)
-        //   .subscribe(
-        //     (updatedUser) => {
-        //       console.log('success update! -> ', updatedUser);
-        //     },
-        //     (err) => {
-        //       console.log('err update --> ', err);
-        //     }
-        //   )
+
         console.log('subscribe subject time ****', this.time)
       }
     )
@@ -135,13 +130,13 @@ export class ProfileComponent implements OnInit {
             if (trip.time >= 3600) {
               let hours = Math.floor(trip.time / 3600);
               if (trip.time % 3600 > 0) {
-                let mins = trip.time % 3600;
+                let mins = trip.time % 3600 % 60;
                 this.user.trips[i].dispTime =  hours + 'hours and ' + mins + ' minutes.';
               } else {
               this.user.trips[i].dispTime =  hours + ' hours.'
               }
             } else if (trip.time >= 60 && trip.time < 3600) {
-              let mins = Math.floor(trip.time /  60);
+              let mins = Math.floor(trip.time / 60);
               this.user.trips[i].dispTime = mins + ' minutes.';
               console.log(this.user);
             }
@@ -157,7 +152,7 @@ export class ProfileComponent implements OnInit {
         if (this.totalTime >= 3600) {
           let hours = Math.floor(this.totalTime / 3600);
           if (this.totalTime % 3600 > 0) {
-            let mins = (this.totalTime % 3600) % 60;
+            let mins = Math.floor((this.totalTime % 3600) / 60);
             this.time = 'Total Time: '+ hours + ' h and ' + mins + ' min.';
 
           } else {
