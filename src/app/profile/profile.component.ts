@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
           newTrip.dispTime =  hours + ' hours.'
           }
         } else if (newTrip.time >= 60 && newTrip.time < 3600) {
-          let mins = Math.floor(newTrip.time / 60);
+          let mins = Math.floor(newTrip.time / 60)  ;
           newTrip.dispTime = mins + ' minutes.';
 
         }
