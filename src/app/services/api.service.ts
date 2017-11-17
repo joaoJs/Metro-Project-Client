@@ -70,6 +70,8 @@ export class ApiService {
       localStorage.clear();
     }
 
+    // uses the google geocoding api to get the coordinates of the location
+    // based on user's input
     getOrigin(location: string) {
       return this.http.get(this.geoUrl + 'address=' + location + '&key=' + this.key);
     }
@@ -81,47 +83,22 @@ export class ApiService {
     // instead of calling distance matrix api here, we'll call it in the backend
     // so now we need to make a get request to the backend instead
     getDistance(lat: string, lng: string, coords: string, mode: string) {
-      // const props = {
-      //   lat: lat,
-      //   lng: lng,
-      //   coords: coords,
-      //   mode: mode,
-      //   key: this.key
-      // }
       console.log({ lat, lng, coords,mode, key:this.key})
       return this.http.get(this.baseUrl + '/api/distance/'+ lat+ '/' +lng+ '/'+coords+'/'+mode+'/'+this.key);
-
-      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
     }
 
-    // getDistance(lat: string, lng: string, coords: string, mode: string) {
-    //   //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
-    //   return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
-    // }
-
-
+    // gets distance between metro lines.
     getDistanceMetro(lat: string, lng: string, coords: string) {
-      // const props = {
-      //   lat: lat,
-      //   lng: lng,
-      //   coords: coords,
-      //   key: this.key
-      // }
       console.log({ lat, lng, coords, key:this.key})
       return this.http.get(this.baseUrl + '/api/distance-metro/'+ lat+ '/' +lng+ '/' + coords + '/' +this.key);
-
-      //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=' + mode + '&key=' + this.key);
     }
 
     getCarDistance(lat: string, lng: string, coords: string) {
       return this.http.get(this.baseUrl + '/api/distance-car/'+ lat+ '/' +lng+ '/' + coords + '/' +this.key);
     }
 
-    // getDistanceMetro(lat: string, lng: string, coords: string) {
-    //   //return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + lat2 + ',' + lng2 + '&key=' + this.key);
-    //   return this.http.get(this.distanceUrl + 'origins=' + lat + ',' + lng + '&destinations=' + coords + '&mode=transit&key=' + this.key);
-    // }
 
+    // get array with all the stations from the database
     getStationsArray() {
       return this.http.get(this.baseUrl + '/api/stations');
     }

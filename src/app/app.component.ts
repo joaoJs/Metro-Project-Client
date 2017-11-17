@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
       }
     )
 
+    // checks if user is logged in, and if so,
+    // sets the user's info to req.user
+    // the user info from the database is the req.user object
     this.userService.getLoginStatus()
       .subscribe(
         (user: any) =>{
@@ -44,87 +47,50 @@ export class AppComponent implements OnInit {
   }
 
   markers: any[] = [];
-
   color: string = 'rgba(255,100,0,1)';
-
   colorNew: string = 'rgb(0,0,150)';
-
   locationName: string = "";
-
   destinationName: string = "";
-
   data: any = {};
-
   allDistances: number[] = [];
-
   sortedDistances: number[] = [];
-
-  //closestMessageOrigin: string = '';
-
-  //closestMessageDest: string = '';
-
   closestStOr: string = '';
-
   closestStDest: string = '';
-
   locOr: string = '';
-
   latOr: number;
-
   lngOr: number;
-
   coords: string = '';
-
   latDest: number;
-
   lngDest: number;
-
   locDest: string = '';
-
   sortedDistancesOr: number[] = [];
-
   sortedDistancesDest: number[] = [];
-
   indexOr: number;
-
   indexDest: number;
-
   closestStOrLat: number;
-
   closestStOrLng: number;
-
   closestStDestLat: number;
-
   closestStDestLng: number;
-
   completeDist: number = 0;
-
   distDest: number;
-
   distOr: number;
-
   distSt: number;
-
   completeDistMessage: string = '';
-
   travelModeOr: string = '';
-
   travelModeDest: string = '';
-
   timeOr: number;
-
   timeDest: number;
-
   timeMetro: number;
-
   timeTotal: number = 0;
-
   stationsArray: any[] = [];
-
   arrToCalc: any[] = [];
-
   tripObj: any = {};
 
+
+  // the following stations arrays are used to determine the
+  //coordinates for the polylines
+
+  // exhisting stations
   stations: any[] = [
        {lat: 25.7810171, lng: -80.19628360000002},
        {lat: 25.776034, lng: -80.196061},
@@ -138,6 +104,7 @@ export class AppComponent implements OnInit {
        {lat: 25.6850431, lng: -80.3136722}
     ];
 
+   // new stations south
    newStations: any[] = [
       {lat: 25.6850431, lng: -80.3136722},
       {lat: 25.644235, lng: -80.3383722},
@@ -146,6 +113,7 @@ export class AppComponent implements OnInit {
       {lat: 25.6071269, lng: -80.39927949999999}
     ]
 
+    // new stations north
     newStationsNorth: any[] = [
       {lat: 25.7810171, lng: -80.19628360000002},
       {lat: 25.8011729, lng: -80.20023049999999},
@@ -164,9 +132,13 @@ export class AppComponent implements OnInit {
   }
 
   title = 'app';
+  // set initial coordinates to Miami
   lat: number = 25.7617;
   lng: number = -80.1918;
   zoom: number = 10;
+
+
+    // functions that transpose units of measure
 
     getMiles(i) {
         return i*0.000621371192;
@@ -187,11 +159,9 @@ export class AppComponent implements OnInit {
     }
 
   newMarker: any = {};
-
   markerName: string = "";
   markerLat: string = "";
   markerLng: string = "";
-  //markerDraggable: string = "No";
 
   markerClicked(marker: any, index: number) {
     console.log(marker.name + " was clicked at " + index + " position.");
@@ -203,7 +173,6 @@ export class AppComponent implements OnInit {
       name: 'Untitled',
       lat: $event.coords.lat,
       lng: $event.coords.lng
-      //draggable: false
     }
 
   this.markers.push(this.newMarker);
@@ -213,19 +182,19 @@ export class AppComponent implements OnInit {
     this.markerService.clearLocalStorage();
   }
 
+
+  // adds new marker based on coordinates
+  // markers will be added at the trip's origin and destination
   addMarker(location: string, lat: number, lng: number) {
     console.log('Adding Marker.');
 
     this.newMarker = {
       name: location,
       lat: lat,
-      lng: lng,
-      //iconUrl: url
-      //draggable: bool
+      lng: lng
     }
     console.log(this)
     this.markers.push(this.newMarker);
-    //this.markerService.addMarker(this.newMarker);
   }
 
   markerDragEnd(marker: any,index: number, $event: any) {
@@ -235,7 +204,6 @@ export class AppComponent implements OnInit {
       name: marker.name,
       lat: parseFloat(marker.lat),
       lng: parseFloat(marker.lng)
-      //draggable: marker.draggable
     }
 
     console.log("UPMARKER ---> ",   upMarker);
@@ -256,7 +224,7 @@ export class AppComponent implements OnInit {
   errorMessageForm: string = '';
 
   submitLocations() {
-    // check if all input was provided
+    // check if all inputs were provided
     if (this.locationName === '' ||
         this.travelModeOr === '' ||
         this.destinationName === '' ||
@@ -265,6 +233,12 @@ export class AppComponent implements OnInit {
     } else {
 
       this.errorMessageForm = '';
+
+
+
+
+  // gets the stations array from the database
+
 
   this.markerService.getStationsArray()
     .subscribe(
@@ -275,8 +249,8 @@ export class AppComponent implements OnInit {
 
 
 
-
-
+    //gets the trip's origin information based on the user's input
+    // response gives the formatted address and the coordinates.
     this.markerService.getOrigin(this.locationName)
       .subscribe(
         (response) => {
@@ -287,19 +261,21 @@ export class AppComponent implements OnInit {
           this.lngOr = response['results'][0].geometry.location.lng;
           // adding marker
           this.addMarker(this.locOr,this.latOr,this.lngOr);
-          //this.coords = this.allStations.map(s => s.lat + ',' + s.lng).join('|');
-          //this.stationsArray.forEach(s=> console.log('Before Coords', s.latLng));
+
+          // formate all the coordinates into an string to use in the URL
+          // for the next API request
           this.coords = this.stationsArray.map(s => s.latLng.lat + ',' + s.latLng.lng).join('|');
 
-
+          // uses coords string to find the distance between user's origin and all of the stations
+          // this will allow us to know which one is the closest station
+          // it also sends the travel mode from the origin until the metro, so that the result
+          // is more specific
           this.markerService.getDistance(String(this.latOr), String(this.lngOr), this.coords, this.travelModeOr)
             .subscribe(
               (data) => {
                 console.log("distances Work!---> ", data);
-                //console.log("dist array --> ", data['rows'][0].elements);
                 // get array of distances from response
                 const distArray = data['rows'][0].elements;
-                //console.log("DistArray! ---> ", distArray);
                 // sort array of distances, and pair the distances with their index and add duration!
                 this.sortedDistancesOr = distArray.map((d,i) => [Number((d.distance.text).slice(0,-3)), i, d.duration.value])
                   .sort((a,b) => a[0] - b[0]);
@@ -311,8 +287,9 @@ export class AppComponent implements OnInit {
                 this.timeOr = this.sortedDistancesOr[0][2];
                 this.timeTotal += this.timeOr;
                 const timeOrMess = this.sToMin(this.timeOr);
-                //this.closestMessageOrigin = `The closest station to your origin is ${this.closestStOr}. The distance is ${this.distOr} miles and it should take you ${timeOrMess} to make this trajectory.`;
 
+                //gets the trip's destination information based on the user's input
+                // response gives the formatted address and the coordinates.
                 this.markerService.getDestination(this.destinationName)
                   .subscribe(
                     (response) => {
@@ -322,6 +299,11 @@ export class AppComponent implements OnInit {
                       this.addMarker(this.locDest,this.latDest,this.lngDest);
 
                       console.log(this.coords);
+
+                      // uses the same coords string to find the distance between all of the stations and the user's origin
+                      // this will allow us to know which one is the closest station
+                      // it also sends the travel mode from the station until destination, so that the result
+                      // is more specific
                       this.markerService.getDistance(String(this.latDest), String(this.lngDest), this.coords, this.travelModeDest)
                         .subscribe(
                           (data) => {
@@ -337,7 +319,7 @@ export class AppComponent implements OnInit {
                             this.timeDest = this.sortedDistancesDest[0][2];
                             this.timeTotal += this.timeDest;
                             const timeDestMess = this.sToMin(this.timeDest);
-                            //this.closestMessageDest = `The closest station to your destination is ${this.closestStDest}. The distance is ${this.distDest} miles and it should take you ${timeDestMess} to make this trajectory.`;
+
 
                             console.log('BOTH!!! HERE!!! ---> ', this.closestStOr, this.closestStDest);
 
@@ -462,6 +444,7 @@ export class AppComponent implements OnInit {
 
   }
 
+  // function to scroll page to specific sections
   goTo(ev, selector) {
     if (ev !== '_') {
       ev.preventDefault();
@@ -471,6 +454,7 @@ export class AppComponent implements OnInit {
     window.scrollTo(0, locForm.offsetTop);
   }
 
+  // function to logout
   logMeOut() {
 
     this.userService.logOut()

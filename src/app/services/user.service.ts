@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { environment } from '../../environments/environment';
+//Reactive Extensions Library for JavaScript
 import 'rxjs/add/operator/do';
 
 @Injectable()
@@ -23,6 +24,8 @@ export class UserService {
     this.loginStatusSubject.next(info);
   }
 
+
+  // send the post request to sign up
   postSignup(userInfo: any) {
     return(
       this.http.post(
@@ -42,6 +45,7 @@ export class UserService {
     );
   }
 
+  // send the post request to log in
   postLogIn(info: any) {
     return (
       this.http.post(
@@ -62,6 +66,7 @@ export class UserService {
 
   }
 
+  // Get request to get information on current logged in user
   getUser() {
     return this.http.get(this.baseUrl + '/api/user', {withCredentials:true});
   }
